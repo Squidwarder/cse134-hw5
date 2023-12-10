@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Contact form no JS</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Yalu Ouyang's Personal portfolio">
+        <meta name="keywords" content="Personal, Portfolio, employment, job-hunting">
+        <meta name="author" content="Yalu Ouyang">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+        <link rel="manifest" href="favicon_io/site.webmanifest">
+        <link rel="stylesheet" href="css/general.css">
+    </head>
+    <body>
+        <input type="checkbox" id="theme-switch" style="display: none;">
+        <nav>
+            <a href="index.html">Back to homepage</a>
+            <a href="about_me.html">About me</a>
+            <a href="blog.html">My blog posts</a>
+            <label for="theme-switch" class="switch-label"></label>
+        </nav>
+        <header>
+            <h1>Hello, this page contains JS-free contact form</h1>
+        </header>
+
+        <main>
+            <section>
+                <h2>Contact me</h2>
+                <p>
+                    If you have any questions about me or would like to know me better, please fill out the form below
+                </p>
+    
+                <form action="https://httpbin.org/post" method="post">
+                                    
+                    <label for="form_vis_name">Name (Required)</label><br>
+                    <input type="text" id="form_vis_name" name="vis_name" required pattern="^[a-zA-Z0-9]+$"><br>
+                    <div class="msg-block">
+                        <output name="name_error" for="form_vis_name">[error msg]</output>
+                        <output name="name_info_msg" for="form_vis_name">[info msg]</output><br>
+                    </div>
+                                    
+                    <label for="form_vis_email">Email (Required)</label><br>
+                    <input type="email" id="form_vis_email" name="vis_email" required pattern="^[ -~]+@[ -~]+\.[ -~]+$"><br>
+                    <div class="msg-block">
+                        <output name="emali_error" for="form_vis_email">[error msg]</output>
+                        <output name="emali_info_msg" for="form_vis_email">[info msg]</output><br>
+                    </div>
+                            
+                    <label for="form_vis_comment">Comments (Required, ASCII characters only)</label><br>
+                    <textarea rows="5" cols="50" id="form_vis_comment" name="vis_comment"
+                        required maxlength="200" placeholder="Please don't go over 200 characters"></textarea><br>
+                    
+                    <div class="msg-block">
+                        <output name="comment_error" for="form_vis_comment">[error msg]</output>
+                        <output name="comment_info_msg" for="form_vis_comment">[info msg]</output><br>
+                    </div>
+                    
+                    <input type="hidden" name="possible_bot" value=true>
+                    <input type="submit" value="Send">
+    
+                </form>
+            </section>
+        </main>
+        <script src="js/setTheme.js"></script>
+    </body>
+</html>

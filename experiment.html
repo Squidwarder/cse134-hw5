@@ -1,0 +1,156 @@
+<!-- TODO: Need to use these tags -->
+<!-- html, head, title, meta, link, script*, style*, body,  -->
+<!-- main, h1, h2, h3, p, section, header, footer, aside,  -->
+<!-- nav, div, span, br, b, i, strong, em, code, pre, hr, a,  -->
+<!-- img, picture, iframe, audio, video, source, canvas*, svg* ul, ol,  -->
+<!-- optgroup, li, form, label, fieldset, legend, input, textarea,  -->
+<!-- datalist, select, option, details, summary, button, template,  -->
+<!-- table, tr, td, th, caption, col, colgroup, figure, figcaption -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Yalu Ouyang experiment page</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Yalu Ouyang's Personal portfolio">
+        <meta name="keywords" content="Personal, Portfolio, employment, job-hunting">
+        <meta name="author" content="Yalu Ouyang">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+        <link rel="manifest" href="favicon_io/site.webmanifest">
+        <link rel="stylesheet" href="css/general.css">
+    </head>
+    <body>
+        <input type="checkbox" id="theme-switch" style="display: none;">
+        <header>
+            
+            <nav>
+                <a href="index.html">Back to homepage</a>
+                <label for="theme-switch" class="switch-label"></label>
+            </nav>
+            
+            <h1 style="border-style: dashed;">This is the <i>experiment</i> page for CSE 134B HWs</h1>
+        </header>
+        
+        <main>
+            <section>
+                <h2 style="color: white; animation-name: animation_experiment; animation-duration: 4s;
+                animation-iteration-count: infinite">
+                    Testing out some different tags (Now with CSS animation)
+                </h2>
+                <p>
+                    The primary purpose of this particular webpage is to <strong>experiment</strong> with different
+                    HTML tags and other functions.
+                </p>
+                <aside>
+                    That said, it's pretty helpful to get an idea of how to arrange different
+                    content on webpages.
+                </aside>
+                <p>
+                    Therefore it won't contribute too much to the actual purpose of the website                    
+                </p>                
+                <p>
+                    The content below are mostly demonstrations of different HTML tag usage.
+                    Hopefully they'll become useful practice for the more important webpages
+                </p>
+                <h3>Some games I like to play</h3>
+                <ul>
+                    <li>Dota 2</li>
+                    <li>Assetto Corsa</li>
+                    <li>Countestrike</li>
+                </ul>
+                And from Dota 2, my top 3 favorite professional teams are below:
+                <ol>
+                    <li>Team Liquid</li>
+                    <li>Team Secret</li>
+                    <li>Evil Geniuses</li>
+                </ol>
+
+                <hr>
+            </section>
+
+            <p>
+                Here is a picture of <b>me</b>
+            </p>
+            <picture style="padding-left: 3vw;">
+                <source srcset="yalu_image.webp">
+                <img src="yalu_image.webp" alt="Picture of Yalu" style="transform: skewX(20deg)">
+            </picture>
+                        
+            <h3>Trying out HTML form</h3>
+            <form>                
+                <fieldset>
+                    <legend>Hello dear visitors, please look here</legend>
+                    <label>Your name please</label>
+                    <input type="text"><br>
+                    <label>Why did you came here?</label><br>
+                    <textarea rows="5" cols="50">Please write something here</textarea><br>
+                    <label>Oh and have you heard of the Dota 2 teams I mentioned?</label>
+                    <select>
+                        <optgroup label="Your response here">
+                            <option>Heard of all teams</option>
+                            <option>Heard of one team</option>
+                            <option>Plays Dota but don't follow the pro scene</option>
+                            <option>What's Dota 2?</option>
+                        </optgroup>
+                    </select>
+                </fieldset>
+            </form>
+
+            <h3>Iframes seem fancy</h3>
+            <iframe src="index.html" title="Iframe of homepage" style="max-width: 50vw;"></iframe>
+
+            <hr>
+            <div>
+                This content is inside a <code>div</code> tag.
+                The professor said we <span style="color:red">SHOULDN'T</span> abuse it.
+                Too many unlabelled <code>div</code> tags can make it hard to find exact content, so
+                it should be used with <em>great consideration</em>.
+            </div>
+
+            <h3>This is a famous Haiku by Matsuo Bashoo: "The Old Pond"</h3>
+            <pre>
+                An old silent pond
+                A frog jumps into the pond--
+                Splash! Silence again
+            </pre>
+            Here is a splashing sound.
+            <audio controls style="max-width: 20vw;">
+                <source src="splash_sound.mp3" type="audio/mpeg">
+                If you're reading this, then your browser didn't load the audio correctly.
+            </audio>
+
+        </main>
+
+        <section>
+            <h2>Extra credit:</h2>
+            Einstein's formula is
+            <math>
+                <mrow>
+                    <mi>E</mi>
+                    <mo>=</mo>
+                    <mi>m</mi>
+                    <msup>
+                        <mi>c</mi>
+                        <mn>2</mn>
+                    </msup>
+                </mrow>
+            </math>
+        </section>        
+
+        <footer>
+            <h3>You can also go back to home page here.</h3>
+            <button onclick="alert('Gotcha!')">Back to homepage</button>
+            <nav>
+                <a href="index.html">Back to homepage</a>
+                <a href="about_me.html">Or if you want to learn more about me</a>
+                <a href="article1.html">Check out this article I just wrote</a>
+            </nav>
+        </footer>
+        <script src="js/setTheme.js"></script>
+    </body>
+</html>

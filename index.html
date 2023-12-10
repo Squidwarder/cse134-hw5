@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Yalu Ouyang home page</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Yalu Ouyang's Personal portfolio">
+        <meta name="keywords" content="Personal, Portfolio, employment, job-hunting">
+        <meta name="author" content="Yalu Ouyang">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+        <link rel="manifest" href="favicon_io/site.webmanifest">
+        <link rel="stylesheet" href="css/general.css">
+    </head>
+    <body>
+        <!-- ! Checkbox is here since CSS variable updates can only apply to siblings after the checkbox -->
+        <!-- ! This means that the checkbox must come in font of all other applicable elements -->
+        <input type="checkbox" id="theme-switch" style="display: none;">
+        <header>
+            <h1>Hello, this is the homepage for Yalu Ouyang's website</h1>
+        </header>
+        <nav>
+            <a href="about_me.html">About me</a>
+            <a href="blog.html">My blog posts</a>            
+            <label for="theme-switch" class="switch-label"></label>
+        </nav>
+
+        <main>
+            <section>
+                <h2>Quick Intro</h2>                    
+                <p>                
+                    Hello there! You're currently visiting the personal portfolio of Yalu Ouyang.
+                    Feel free to look around, you can learn more about me or read some articles I wrote.
+                </p>
+                
+                <img src="yalu_mountain_climb3.webp" alt="An image of Yalu Ouyang climbing mountain">
+                
+                <p>
+                    The picture here was taken during the summer, where me and my cousin went climbing.
+                    It was quite a fun time.
+                </p>
+            </section>        
+    
+            <section>
+                <h2>Contact me</h2>
+                <p>
+                    If you have any questions about me or would like to know me better, please fill out the form below
+                </p>
+    
+                <form action="https://httpbin.org/post" method="post">
+                                    
+                    <label for="form_vis_name">Name (Required)</label><br>
+                    <input type="text" id="form_vis_name" name="vis_name"><br>
+                    <div class="msg-block">
+                        <output name="name_error" for="form_vis_name">[error msg]</output>
+                        <output name="name_info_msg" for="form_vis_name">[info msg]</output><br>
+                    </div>
+                                    
+                    <label for="form_vis_email">Email (Required)</label><br>
+                    <input type="text" id="form_vis_email" name="vis_email"><br>
+                    <div class="msg-block">
+                        <output name="emali_error" for="form_vis_email">[error msg]</output>
+                        <output name="emali_info_msg" for="form_vis_email">[info msg]</output><br>
+                    </div>
+                            
+                    <label for="form_vis_comment">Comments (Required)</label><br>
+                    <textarea rows="5" cols="50" id="form_vis_comment" name="vis_comment">Please don't go over 200 characters</textarea><br>
+                    
+                    <div class="msg-block">
+                        <output name="comment_error" for="form_vis_comment">[error msg]</output>
+                        <output name="comment_info_msg" for="form_vis_comment">[info msg]</output><br>
+                    </div>
+                    
+                    <input type="hidden" name="possible_bot" value=true>
+                    <input type="submit" value="Send">
+    
+                </form>
+            </section>
+    
+            <section>
+                <h2>Footnote:</h2>
+                <p>
+                    <strong>For CSE 134B Instructors:</strong> here is a link to the "Experiment" page
+                    where I demonstrated the use of all required HTML tags for HW2 as well
+                    as some CSS experiments for HW3.
+                    <a href="experiment.html">Experiment page</a><br>
+                    <strong>HW4:</strong> Here is the link to the "Form-no-JS" page that shows validation with solely HTML
+                    and CSS.
+                    <a href="form-no-js.html">Form-no-JS page</a><br>
+                    And here is the link to the same form but with JS validation.
+                    <a href="form-js.html">Form-JS page</a>
+                </p>
+            </section>
+        </main>
+        <script src="js/setTheme.js"></script>
+    </body>
+</html>

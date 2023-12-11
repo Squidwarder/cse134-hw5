@@ -45,63 +45,7 @@
             </section>
         </main>
 
-        <script>
-            class ratingWidget extends HTMLElement {
-                constructor() {
-                    super();
-
-                    this.attachShadow({ mode: 'open' });
-
-                    this.ratingContainer = document.createElement("form");
-                    this.ratingContainer.innerHTML = `
-                    <label for="rating">How satisfied are you?</label>
-                    <input type="hidden" name="question" value="How satisfied are you?">
-                    <input type="hidden" name="sentBy" value="JS">
-                    <input type="number" id="rating" name="rating" min="1" max="5"
-                    value="0" required>
-                    <button type="submit">Submit rating</button>
-                    `                    
-                    this.submitButton = this.ratingContainer.getElementsByTagName("button");
-
-                    this.shadowRoot.appendChild(this.ratingContainer);
-                }
-
-                connectedCallback() {
-                    //console.log("Custom rating widget connected!");
-                    this.ratingContainer.action = "https://httpbin.org/post";
-                    this.ratingContainer.method = "POST";
-                    
-                    this.ratingContainer.addEventListener('submit', function(event) {
-                        event.preventDefault();
-                
-                        // Prepare FormData from the form
-                        let formData = new FormData(this);
-                
-                        // Use fetch API to send the form data
-                        fetch('https://httpbin.org/post', {
-                            method: 'POST',
-                            headers: {
-                                "X-Sent-By": "JS",
-                            },
-                            body: formData
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                // Display the response
-                                document.getElementById('ratingOutput').textContent = JSON.stringify(data, null, 2);
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                            });
-                    });
-                }
-
-            }
-
-            customElements.define("rating-widget", ratingWidget);
-                       
-
-        </script>        
+        <script src="js/ratingWidget.js"></script>        
         <script src="js/setTheme.js"></script>
     </body>
 </html>

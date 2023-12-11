@@ -14,11 +14,18 @@ class weatherWidget extends HTMLElement {
                 }
 
                 .weatherEntry {
-                    border: 2px solid black;
+                    border: 2px solid #1a8cff;
                     border-radius: 2vw;
                     padding: 1vh 1vw 1vh 1vw;
                     margin: 1vh 1vw 1vh 1vw;
+                    color: #1a8cff;
                     background-color: white;
+                    min-width: 260px;      
+                }
+
+                .weatherEntry:hover {
+                    color: white;
+                    background-color: #005ce6;
                 }
 
 				button.weatherButton {                                 

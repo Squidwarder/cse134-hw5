@@ -7,9 +7,19 @@ class weatherWidget extends HTMLElement {
         this.shadowRoot.innerHTML = `
 			<style>                
                 #defaultWeather, .customLocWeather {
+                    max-width: 100vw;
                     display: flex;
                     flex-direction: row;
-                }    
+                    flex-wrap: wrap;
+                }
+
+                .weatherEntry {
+                    border: 2px solid black;
+                    border-radius: 2vw;
+                    padding: 1vh 1vw 1vh 1vw;
+                    margin: 1vh 1vw 1vh 1vw;
+                    background-color: white;
+                }
 
 				button.weatherButton {                                 
                     font-size: 15px;
@@ -62,11 +72,20 @@ class weatherWidget extends HTMLElement {
         sanDiego7day.then(weatherArray7day => {
             let defaultList = shadowRoot.querySelector('#defaultWeather');
             console.log(weatherArray7day);
-            weatherArray7day.forEach(daily => {                
+            weatherArray7day.forEach(daily => {
+                const startDate = new Date(daily.startTime);
+                const year = startDate.getFullYear();
+                const month = startDate.getMonth() + 1;
+                const day = startDate.getDate();
+                const hour = startDate.getHours();
+                let formattedDate = `${year}/${month < 10 ? '0' : ''}${month}/${day < 10 ? '0' : ''}${day}
+                                            ${hour < 12 ? hour : hour - 12}${hour < 12 ? "AM" : "PM"}`;
+
                 let newDailydata = `<div class="weatherEntry">
-                <p>Date: ${daily.name}</p>
-                <p>Summary: ${daily.shortForecast}</p>
-                <p>Max Temperature: ${daily.temperature} ${daily.temperatureUnit}</p>
+                <p>${daily.name}</p>
+                <p>${formattedDate}</p>
+                <p>${daily.shortForecast}</p>
+                <p>Max Temp: ${daily.temperature} ${daily.temperatureUnit}</p>
                 </div>`
                 defaultList.insertAdjacentHTML("beforeend", newDailydata);
             });
@@ -97,10 +116,19 @@ class weatherWidget extends HTMLElement {
                     shadowRoot.appendChild(customWeatherSection);
                     let customList = shadowRoot.querySelector(".customLocWeather")
                     weatherArray7day.forEach(daily => {
+                        const startDate = new Date(daily.startTime);
+                        const year = startDate.getFullYear();
+                        const month = startDate.getMonth() + 1;
+                        const day = startDate.getDate();
+                        const hour = startDate.getHours();
+                        let formattedDate = `${year}/${month < 10 ? '0' : ''}${month}/${day < 10 ? '0' : ''}${day}
+                                                    ${hour < 12 ? hour : hour - 12}${hour < 12 ? "AM" : "PM"}`;
+
                         let newDailydata = `<div class="weatherEntry">
-                        <p>Date: ${daily.name}</p>
-                        <p>Summary: ${daily.shortForecast}</p>
-                        <p>Max Temperature: ${daily.temperature} ${daily.temperatureUnit}</p>
+                        <p>${daily.name}</p>
+                        <p>${formattedDate}</p>
+                        <p>${daily.shortForecast}</p>
+                        <p>Max Temp: ${daily.temperature} ${daily.temperatureUnit}</p>
                         </div>`
                         customList.insertAdjacentHTML("beforeend", newDailydata);
                     })

@@ -179,9 +179,9 @@ function submitRating(ratingContainer, numRating) {
     let ratingMessage = "";
 
     if (numRating.value >= 4){
-        ratingMessage = `Thanks for a ${numRating.value} rating! Much appreciated`;
+        ratingMessage = `Thanks for a ${numRating.value} rating! Good to know that you enjoyed my website. Much appreciated.`;
     } else {
-        ratingMessage = `Thank you for your ${numRating.value} star feedback. I'll try to do better`;
+        ratingMessage = `Thank you for your ${numRating.value} star feedback. Sorry about the subpar experience, I'll try to do better.`;
     }
     document.getElementById('ratingMsg').textContent = ratingMessage;
 }

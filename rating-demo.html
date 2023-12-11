@@ -31,7 +31,7 @@
             <section>
                 <h2>Leave a rating for my website (HW5)</h2>
                 
-                <rating-widget>
+                <rating-widget id="satisfactionRating">
                     <form action="https://httpbin.org/post" method="POST">
                         <label for="rating">How satisfied are you?</label>
                         <input type="hidden" name="question" value="How satisfied are you?">
@@ -41,18 +41,11 @@
                         <button type="submit">Submit rating</button>
                     </form>
                 </rating-widget>
+                <output id="ratingOutput">&nbsp;</output>
             </section>
         </main>
-        <script>
 
-            /*
-            <label for="rating">How satisfied are you?</label>
-                        <input type="hidden" name="question" value="How satisfied are you?">
-                        <input type="hidden" name="sentBy" value="HTML">
-                        <input type="number" id="rating" name="rating" min="1" max="5"
-                        value="0" required>
-                        <button type="submit">Submit rating</button>
-            */
+        <script>
             class ratingWidget extends HTMLElement {
                 constructor() {
                     super();
@@ -81,16 +74,35 @@
                     //console.log("Custom rating widget connected!");
                     this.ratingContainer.action = "https://httpbin.org/post";
                     this.ratingContainer.method = "POST";
-                    this.submitButton.addEventListener("click", function() {
-                        console.log("The form is submitted using Javascript");
+                    
+                    this.ratingContainer.addEventListener('submit', function(event) {
+                        event.preventDefault();
+                
+                        // Prepare FormData from the form
+                        let formData = new FormData(this);
+                
+                        // Use fetch API to send the form data
+                        fetch('https://httpbin.org/post', {
+                            method: 'POST',
+                            body: formData
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                // Display the response
+                                document.getElementById('ratingOutput').textContent = JSON.stringify(data, null, 2);
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
                     });
-                }    
+                }
 
             }
 
-            customElements.define("rating-widget", ratingWidget);            
+            customElements.define("rating-widget", ratingWidget);
+                       
 
-        </script>
+        </script>        
         <script src="js/setTheme.js"></script>
     </body>
 </html>

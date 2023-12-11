@@ -102,7 +102,7 @@ class weatherWidget extends HTMLElement {
                 </picture>
                 <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
                 <p>Humidity: ${daily.relativeHumidity.value} %</p>
-                <p>Wind: ${daily.windSpeed} to ${daily.windDirection}</p>
+                <p>Wind: ${daily.windSpeed} from ${daily.windDirection}</p>
                 </div>`
                 defaultList.insertAdjacentHTML("beforeend", newDailydata);
             });
@@ -135,7 +135,7 @@ class weatherWidget extends HTMLElement {
                     </picture>
                     <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
                     <p>Humidity: ${daily.relativeHumidity.value} %</p>
-                    <p>Wind: ${daily.windSpeed} to ${daily.windDirection}</p>
+                    <p>Wind: ${daily.windSpeed} from ${daily.windDirection}</p>
                     </div>`
                     defaultList.insertAdjacentHTML("beforeend", newDailydata);
                 });
@@ -179,7 +179,7 @@ class weatherWidget extends HTMLElement {
                         </picture>
                         <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
                         <p>Humidity: ${daily.relativeHumidity.value} %</p>
-                        <p>Wind: ${daily.windSpeed} to ${daily.windDirection}</p>
+                        <p>Wind: ${daily.windSpeed} from ${daily.windDirection}</p>
                         </div>`
                         customList.insertAdjacentHTML("beforeend", newDailydata);
                     })
@@ -210,7 +210,7 @@ class weatherWidget extends HTMLElement {
                         </picture>                        
                         <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
                         <p>Humidity: ${daily.relativeHumidity.value} %</p>
-                        <p>Wind: ${daily.windSpeed} to ${daily.windDirection}</p>
+                        <p>Wind: ${daily.windSpeed} from ${daily.windDirection}</p>
                         </div>`
                         customList.insertAdjacentHTML("beforeend", newDailydata);
                     })
@@ -236,8 +236,12 @@ function getWeather(latitude, longitude) {
             document.getElementById('weatherOutput').textContent = JSON.stringify(data, null, 2);
             // console.log(data.properties);
             let secondRequest = data.properties.forecast;
-
-            let weatherMessage = `This is the weather data at location (${latitude}, ${longitude})`;    
+            let weatherMessage = "";
+            if (latitude === 32.71571 && longitude === -117.16472) {
+                weatherMessage = `This is the weather data at location (${latitude}, ${longitude}) which is the default, San Diego`;
+            } else {                
+                weatherMessage = `This is the weather data at location (${latitude}, ${longitude})`;
+            }
             document.getElementById('weatherMsg').textContent = weatherMessage;
             
             return get7dayWeather(secondRequest);            

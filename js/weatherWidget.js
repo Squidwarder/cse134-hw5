@@ -26,15 +26,18 @@ class weatherWidget extends HTMLElement {
 		`;
         
         this.sanDiegoLatitude = 32.715736;
-        this.sanDigeoLongitude = -117.161087;        
+        this.sanDiegoLongitude = -117.161087;        
 
         this.weatherContainer = document.createElement("div");
         this.weatherContainer.innerHTML = `
-               
+        <label for="locLatitude">Latitude</label>
+        <input type="text" id="locLatitude"name="locationLatitude" value="${this.sanDiegoLatitude}" required></input>
+        <label for="locLongitude">Longitude</label>
+        <input type="text" id="locLongitude"name="locationLongitude" value="${this.sanDiegoLongitude}" required></input>
         <button class="weatherButton" id="getWeatherBtn" name="weatherButton">Get weather Data</button>        
         `;
         
-        this.getWeatherBtn = this.weatherContainer.querySelector('#getWeatherBtn');       
+        this.getWeatherBtn = this.weatherContainer.querySelector('#getWeatherBtn');    
         this.shadowRoot.appendChild(this.weatherContainer);
     }
 
@@ -42,10 +45,13 @@ class weatherWidget extends HTMLElement {
         //console.log("Custom weather widget connected!");
                    
         let sanDiegoLatitude = this.sanDiegoLatitude;
-        let sanDigeoLongitude = this.sanDigeoLongitude;
+        let sanDiegoLongitude = this.sanDiegoLongitude;
+        let inputLatitude = this.weatherContainer.querySelector('#locLatitude');
+        let inputLongitude = this.weatherContainer.querySelector('#locLongitude');      
         this.getWeatherBtn.addEventListener('click', function(event) {        
+            // console.log(inputLatitude.value);
             
-            getWeather(sanDiegoLatitude, sanDigeoLongitude);
+            getWeather(inputLatitude.value, inputLongitude.value);
         });
         
     }    

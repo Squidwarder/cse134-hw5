@@ -60,8 +60,7 @@ class ratingWidget extends HTMLElement {
         <input type="hidden" name="question" value="How satisfied are you?">
         <input type="hidden" name="sentBy" value="JS">        
         <input type="number" id="rating" name="rating" min=1 max=5
-            value=0 required style="display: none;">
-        <button type="submit">Submit rating</button>
+            value=0 required style="display: none;">        
         `;
 
         this.ratingStarContainer = document.createElement("div");

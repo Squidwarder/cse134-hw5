@@ -12,7 +12,7 @@ class ratingWidget extends HTMLElement {
 				label.ratingStar {                                 
                     font-size: 30px;
 					cursor: pointer;
-                    color: brown;                    
+                    color: #ff3385;                    
 				}
                 input.ratingStar:checked ~ label.ratingStar::before {
                     content: '★';                    
@@ -92,40 +92,7 @@ class ratingWidget extends HTMLElement {
         this.ratingContainer.method = "POST";
 
         let ratingContainer = this.ratingContainer;
-        let numRating = this.ratingContainer.querySelector('#rating');
-        let shadowRoot = this.shadowRoot;        
-        
-        this.ratingContainer.addEventListener('submit', function(event) {
-            event.preventDefault();
-    
-            // Prepare FormData from the form
-            let formData = new FormData(this);         
-
-            // Use fetch API to send the form data
-            fetch('https://httpbin.org/post', {
-                method: 'POST',
-                headers: {
-                    "X-Sent-By": "JS",
-                },
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // Display the response
-                    document.getElementById('ratingOutput').textContent = JSON.stringify(data, null, 2);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-
-            let ratingMessage = "";
-            if (numRating.value >= 4){
-                ratingMessage = `Thanks for a ${numRating.value} rating! Good to know that you enjoyed my website. Much appreciated.`;
-            } else {
-                ratingMessage = `Thank you for your ${numRating.value} star feedback. Sorry about the subpar experience, I'll try to do better.`;
-            }
-            document.getElementById('ratingMsg').textContent = ratingMessage;
-        });
+        let numRating = this.ratingContainer.querySelector('#rating');                        
 
         this.rating1star.addEventListener('click', function(event) {
             // console.log("set rating to 1 stars");

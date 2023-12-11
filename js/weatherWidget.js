@@ -20,7 +20,7 @@ class weatherWidget extends HTMLElement {
                     margin: 1vh 1vw 1vh 1vw;
                     color: #1a8cff;
                     background-color: white;
-                    min-width: 260px;      
+                    min-width: 240px;      
                 }
 
                 .weatherEntry:hover {
@@ -41,13 +41,18 @@ class weatherWidget extends HTMLElement {
                 button.weatherButton:hover {
                     color: white;
                     background-color: #ff3385;                    
-                }                 
+                }
+                
+                picture img {
+                    max-width: 230px;
+                    border-radius: 1vw;
+                }
 
 			</style>
 		`;
         
-        this.sanDiegoLatitude = 32.715736;
-        this.sanDiegoLongitude = -117.161087;        
+        this.sanDiegoLatitude = 32.71571;
+        this.sanDiegoLongitude = -117.16472;
 
         this.weatherContainer = document.createElement("div");
         this.weatherContainer.innerHTML = `
@@ -92,7 +97,12 @@ class weatherWidget extends HTMLElement {
                 <p>${daily.name}</p>
                 <p>${formattedDate}</p>
                 <p>${daily.shortForecast}</p>
-                <p>Max Temp: ${daily.temperature} ${daily.temperatureUnit}</p>
+                <picture>
+                <img src="${daily.icon}" alt="Weather Icon">
+                </picture>
+                <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
+                <p>Humidity: ${daily.relativeHumidity.value} %</p>
+                <p>Wind: ${daily.windSpeed} to ${daily.windDirection}</p>
                 </div>`
                 defaultList.insertAdjacentHTML("beforeend", newDailydata);
             });
@@ -100,6 +110,38 @@ class weatherWidget extends HTMLElement {
 
         refreshDefault.addEventListener("click", function(event) {
             console.log("Refresh called");
+
+            let sanDiego7day = getWeather(sanDiegoLatitude, sanDiegoLongitude);
+            sanDiego7day.then(weatherArray7day => {
+                let defaultList = shadowRoot.querySelector('#defaultWeather');
+                defaultList.innerHTML = "";
+                console.log(weatherArray7day);
+                weatherArray7day.forEach(daily => {
+                    const startDate = new Date(daily.startTime);
+                    const year = startDate.getFullYear();
+                    const month = startDate.getMonth() + 1;
+                    const day = startDate.getDate();
+                    const hour = startDate.getHours();
+                    let formattedDate = `${year}/${month < 10 ? '0' : ''}${month}/${day < 10 ? '0' : ''}${day}
+                                                ${hour < 12 ? hour : hour - 12}${hour < 12 ? "AM" : "PM"}`;
+
+                    let newDailydata = `<div class="weatherEntry">
+                    <p>${daily.name}</p>
+                    <p>${formattedDate}</p>
+                    <p>${daily.shortForecast}</p>
+                    <picture>
+                    <img src="${daily.icon}" alt="Weather Icon">
+                    </picture>
+                    <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
+                    <p>Humidity: ${daily.relativeHumidity.value} %</p>
+                    <p>Wind: ${daily.windSpeed} to ${daily.windDirection}</p>
+                    </div>`
+                    defaultList.insertAdjacentHTML("beforeend", newDailydata);
+                });
+                console.log("Refresh worked");
+            })
+
+            
         })
 
         let inputLatitude = this.weatherContainer.querySelector('#locLatitude');
@@ -114,6 +156,33 @@ class weatherWidget extends HTMLElement {
 			    if (el) {
                     let customList = shadowRoot.querySelector(".customLocWeather")
                     console.log("The custom Location Weather list is already added");
+                    customList.innerHTML = "";
+
+                    weatherArray7day.forEach(daily => {
+                        const startDate = new Date(daily.startTime);
+                        const year = startDate.getFullYear();
+                        const month = startDate.getMonth() + 1;
+                        const day = startDate.getDate();
+                        const hour = startDate.getHours();
+                        let formattedDate = `${year}/${month < 10 ? '0' : ''}${month}/${day < 10 ? '0' : ''}${day}
+                                                    ${hour < 12 ? hour : hour - 12}${hour < 12 ? "AM" : "PM"}`;
+
+                        let newDailydata = `<div class="weatherEntry">
+                        <p>${daily.name}</p>
+                        <p>${formattedDate}</p>
+                        <p>${daily.shortForecast}</p>
+                        <picture>
+                        <img src="${daily.icon}" alt="Weather Icon">
+                        </picture>
+                        <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
+                        <p>Humidity: ${daily.relativeHumidity.value} %</p>
+                        <p>Wind: ${daily.windSpeed} to ${daily.windDirection}</p>
+                        </div>`
+                        customList.insertAdjacentHTML("beforeend", newDailydata);
+                    })
+
+                    console.log("The update worked");
+
                 } else {
                     let customWeatherSection = document.createElement("section");                    
                     customWeatherSection.innerHTML = `
@@ -135,7 +204,12 @@ class weatherWidget extends HTMLElement {
                         <p>${daily.name}</p>
                         <p>${formattedDate}</p>
                         <p>${daily.shortForecast}</p>
-                        <p>Max Temp: ${daily.temperature} ${daily.temperatureUnit}</p>
+                        <picture>
+                        <img src="${daily.icon}" alt="Weather Icon">
+                        </picture>                        
+                        <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
+                        <p>Humidity: ${daily.relativeHumidity.value} %</p>
+                        <p>Wind: ${daily.windSpeed} to ${daily.windDirection}</p>
                         </div>`
                         customList.insertAdjacentHTML("beforeend", newDailydata);
                     })

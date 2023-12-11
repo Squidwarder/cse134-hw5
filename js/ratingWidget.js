@@ -12,22 +12,18 @@ class ratingWidget extends HTMLElement {
 				label.ratingStar {                                 
                     font-size: 30px;
 					cursor: pointer;
-                    color: brown;
-                    transition: all 0.2s;
+                    color: brown;                    
 				}
                 input.ratingStar:checked ~ label.ratingStar::before {
-                    content: '★';
-                    transition: all 0.2s;
+                    content: '★';                    
                 }
 
                 label.ratingStar:hover ~ label.ratingStar::before {
-                    content: '★';
-                    transition: all 0.2s;
+                    content: '★';                    
                 }
 
                 label.ratingStar:hover::before {
-                    content: '★';
-                    transition: all 0.2s;                    
+                    content: '★';                    
                 }
 
                 label.ratingStar::before {

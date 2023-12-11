@@ -6,10 +6,14 @@ class ratingWidget extends HTMLElement {
 
         this.shadowRoot.innerHTML = `
 			<style>
+                div {
+                    display: flexbox;                                       
+                    left: 0;
+                }
                 input.ratingStar {
                     display: none;
                 }
-				label.ratingStar {
+				label.ratingStar {                                 
                     font-size: 30px;
 					cursor: pointer;
                     color: brown;
@@ -21,8 +25,19 @@ class ratingWidget extends HTMLElement {
                 }
 
                 label.ratingStar:before {
-                    content: '☆';                   
-                  }
+                    content: '☆';        
+                }
+
+                input#star-1:checked ~ label.ratingStar:before {
+                    color: red; 
+                    text-shadow: black 1px 0 10px;
+                }
+
+                input#star-5:checked ~ label.ratingStar:before {
+                    color: #33cc33;
+                    text-shadow: #00ff55 1px 0 10px;
+                }
+
 			</style>
 		`;
         
@@ -40,16 +55,16 @@ class ratingWidget extends HTMLElement {
 
         this.ratingStarContainer = document.createElement("div");
         this.ratingStarContainer.innerHTML = `
-        <input class="ratingStar star-1" id="star-1" type="radio">
-        <label class="ratingStar" for="star-1"></label>
-        <input class="ratingStar star-2" id="star-2" type="radio">
-        <label class="ratingStar" for="star-2"></label>
-        <input class="ratingStar star-3" id="star-3" type="radio">
-        <label class="ratingStar" for="star-3"></label>
-        <input class="ratingStar star-4" id="star-4" type="radio">        
+        <input class="ratingStar" id="star-5" type="radio" name="ratingStar">
+        <label class="ratingStar" for="star-5"></label>
+        <input class="ratingStar" id="star-4" type="radio" name="ratingStar"> 
         <label class="ratingStar" for="star-4"></label>
-        <label class="ratingStar star-5" for="star-5"></label>        
-        <input class="ratingStar" id="star-5" type="radio">
+        <input class="ratingStar" id="star-3" type="radio" name="ratingStar">
+        <label class="ratingStar" for="star-3"></label>
+        <input class="ratingStar" id="star-2" type="radio" name="ratingStar">
+        <label class="ratingStar" for="star-2"></label>
+        <input class="ratingStar" id="star-1" type="radio" name="ratingStar">
+        <label class="ratingStar" for="star-1"></label>
         `;
         
         this.rating1star = this.ratingStarContainer.querySelector('#star-1');

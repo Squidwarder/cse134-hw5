@@ -61,6 +61,7 @@ customElements.define("weather-widget", weatherWidget);
 
 function getWeather(latitude, longitude) {    
 
+    let secondRequest = "";
     // Use fetch API to send the form data
     fetch(`https://api.weather.gov/points/${latitude},${longitude}`, {
         method: 'GET'
@@ -68,16 +69,47 @@ function getWeather(latitude, longitude) {
     })
         .then(response => response.json())
         .then(data => {
-            // Display the response
+            // Display the response                        
             document.getElementById('weatherOutput').textContent = JSON.stringify(data, null, 2);
-            console.log(data)
+            // console.log(data.properties);
+            secondRequest = data.properties.forecast;
+            
+            // console.log("Second request on the next line");
+            // console.log(secondRequest);
+            // console.log("https://api.weather.gov/gridpoints/SGX/57,14/forecast");
+            // console.log("Are these equivalent: secondRequest & https://api.weather.gov/gridpoints/SGX/57,14/forecast");
+            // console.log(secondRequest === "https://api.weather.gov/gridpoints/SGX/57,14/forecast");
+            
+            get7dayWeather(secondRequest);
         })
         .catch(error => {
-            console.error('Error:', error);
-        });
+            console.error('Error on initial fetch:', error);
+        });    
+    
+
     let weatherMessage = `This is the weather data at location (${latitude}, ${longitude})`;
     
     document.getElementById('weatherMsg').textContent = weatherMessage;
+}
+
+function get7dayWeather(request) {
+    fetch(request, {
+        method: 'GET'
+        
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Display the response                        
+            
+            // console.log(data);
+            let weatherArray7day = data.properties.periods;
+            weatherArray7day.forEach(dayWeather => {
+                console.log(dayWeather);
+            });
+        })
+        .catch(error => {
+            console.error('Error on second fetch:', error);
+        });
 }
 
 function getLocationSuccess() {

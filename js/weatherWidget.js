@@ -277,11 +277,9 @@ function get7dayWeather(request) {
 
 function forecastToIcon(forecast, time) {
     const forecastArray = forecast.split("then");
-    let dayOrNight = "";
+    let isDay = true;
     if (time > 17) {
-        dayOrNight = "Night";
-    } else {
-        dayOrNight = "Day";
+        isDay = false;
     }
     console.log(forecastArray[0]);
 
@@ -289,7 +287,15 @@ function forecastToIcon(forecast, time) {
 
     if (representWeather.includes("Cloudy")) {
         if (representWeather.includes("Mostly")) {
-            return "Weather_Icons/bkn.jpg"
+            if (isDay) {
+                return "Weather_Icons/bkn.jpg"
+            } else {
+                return "Weather_Icons/nbkn.jpg"
+            }
+        }
+        
+        if (representWeather.includes("Few")) {
+            return "Weather_Icons/few.jpg"
         }
     }
     

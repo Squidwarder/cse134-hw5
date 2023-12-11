@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Rating Demo</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Yalu Ouyang's Personal portfolio">
+        <meta name="keywords" content="Personal, Portfolio, employment, job-hunting">
+        <meta name="author" content="Yalu Ouyang">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+        <link rel="manifest" href="favicon_io/site.webmanifest">
+        <link rel="stylesheet" href="css/general.css">
+    </head>
+    <body>
+        <input type="checkbox" id="theme-switch" style="display: none;">
+        <nav>
+            <a href="index.html">Back to homepage</a>
+            <a href="about_me.html">About me</a>
+            <a href="blog.html">My blog posts</a>
+            <label for="theme-switch" class="switch-label"></label>
+        </nav>
+        <header>
+            <h1>Hello, this page contains a demo of a rating widget</h1>
+        </header>
+
+        <main>
+            <section>
+                <h2>Leave a rating for my website (HW5)</h2>
+                
+                <rating-widget>
+                    <form action="https://httpbin.org/post" method="POST">
+                        <label for="rating">How satisfied are you?</label>
+                        <input type="hidden" name="question" value="How satisfied are you?">
+                        <input type="hidden" name="sentBy" value="HTML">
+                        <input type="number" id="rating" name="rating" min="1" max="5"
+                        value="0" required>
+                        <button type="submit">Submit rating</button>
+                    </form>
+                </rating-widget>
+            </section>
+        </main>
+        <script>
+
+            /*
+            <label for="rating">How satisfied are you?</label>
+                        <input type="hidden" name="question" value="How satisfied are you?">
+                        <input type="hidden" name="sentBy" value="HTML">
+                        <input type="number" id="rating" name="rating" min="1" max="5"
+                        value="0" required>
+                        <button type="submit">Submit rating</button>
+            */
+            class ratingWidget extends HTMLElement {
+                constructor() {
+                    super();
+
+                    this.attachShadow({ mode: 'open' });
+
+                    this.ratingContainer = document.createElement("form");
+                    this.ratingContainer.innerHTML = `
+                    <label for="rating">How satisfied are you?</label>
+                    <input type="hidden" name="question" value="How satisfied are you?">
+                    <input type="hidden" name="sentBy" value="JS">
+                    <input type="number" id="rating" name="rating" min="1" max="5"
+                    value="0" required>
+                    <button type="submit">Submit rating</button>
+                    `
+                    //this.rateLabel = document.createElement("label");
+                    //this.rateQuestion = document.createElement("input");
+                    //this.rateSentby = document.createElement("input");
+                    //this.rating = document.createElement("input");
+                    this.submitButton = this.ratingContainer.getElementsByTagName("button");
+
+                    this.shadowRoot.appendChild(this.ratingContainer);
+                }
+
+                connectedCallback() {
+                    //console.log("Custom rating widget connected!");
+                    this.ratingContainer.action = "https://httpbin.org/post";
+                    this.ratingContainer.method = "POST";
+                    this.submitButton.addEventListener("click", function() {
+                        console.log("The form is submitted using Javascript");
+                    });
+                }    
+
+            }
+
+            customElements.define("rating-widget", ratingWidget);            
+
+        </script>
+        <script src="js/setTheme.js"></script>
+    </body>
+</html>

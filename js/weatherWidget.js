@@ -6,7 +6,11 @@ class weatherWidget extends HTMLElement {
 
         this.shadowRoot.innerHTML = `
 			<style>                
-                
+                #defaultWeather, .customLocWeather {
+                    display: flex;
+                    flex-direction: row;
+                }    
+
 				button.weatherButton {                                 
                     font-size: 15px;
 					cursor: pointer;
@@ -20,7 +24,7 @@ class weatherWidget extends HTMLElement {
                 button.weatherButton:hover {
                     color: white;
                     background-color: #ff3385;                    
-                }                          
+                }                 
 
 			</style>
 		`;
@@ -30,11 +34,16 @@ class weatherWidget extends HTMLElement {
 
         this.weatherContainer = document.createElement("div");
         this.weatherContainer.innerHTML = `
+        <section>
+        <h3>The detailed 7 day weather data for San Diego (default)</h3>
+        <button class="weatherButton" id="refreshDefault" name="refreshBtn">Refresh default</button>
+        <div id="defaultWeather"></div>
+        </section>
         <label for="locLatitude">Latitude</label>
         <input type="text" id="locLatitude"name="locationLatitude" value="${this.sanDiegoLatitude}" required></input>
         <label for="locLongitude">Longitude</label>
         <input type="text" id="locLongitude"name="locationLongitude" value="${this.sanDiegoLongitude}" required></input>
-        <button class="weatherButton" id="getWeatherBtn" name="weatherButton">Get weather Data</button>        
+        <button class="weatherButton" id="getWeatherBtn" name="weatherButton">Get weather Data</button>    
         `;
         
         this.getWeatherBtn = this.weatherContainer.querySelector('#getWeatherBtn');    
@@ -43,27 +52,65 @@ class weatherWidget extends HTMLElement {
 
     connectedCallback() {
         //console.log("Custom weather widget connected!");
-                   
+        let shadowRoot = this.shadowRoot;
         let sanDiegoLatitude = this.sanDiegoLatitude;
         let sanDiegoLongitude = this.sanDiegoLongitude;
+
+        //* Fill out default San Diego weather data
+        let sanDiego7day = getWeather(sanDiegoLatitude, sanDiegoLongitude);
+        sanDiego7day.then(weatherArray7day => {
+            let defaultList = shadowRoot.querySelector('#defaultWeather');
+            console.log(weatherArray7day);
+            weatherArray7day.forEach(daily => {                
+                let newDailydata = `<div class="weatherEntry">
+                <p>Date: ${daily.name}</p>
+                <p>Summary: ${daily.shortForecast}</p>
+                <p>Max Temperature: ${daily.temperature} ${daily.temperatureUnit}</p>
+                </div>`
+                defaultList.insertAdjacentHTML("beforeend", newDailydata);
+            });
+        })
+
         let inputLatitude = this.weatherContainer.querySelector('#locLatitude');
         let inputLongitude = this.weatherContainer.querySelector('#locLongitude');      
         this.getWeatherBtn.addEventListener('click', function(event) {        
             // console.log(inputLatitude.value);
             
-            getWeather(inputLatitude.value, inputLongitude.value);
+            let weather7Day = getWeather(inputLatitude.value, inputLongitude.value);
+            weather7Day.then(weatherArray7day => {
+                console.log(weatherArray7day);
+                let el = shadowRoot.querySelector('.customLocWeather');
+			    if (el) {
+                    console.log("The custom Location Weather list is already added");            
+                } else {
+                    let customWeatherList = document.createElement("section");                    
+                    customWeatherList.innerHTML = `
+                    <h3>The detailed 7 day weather data</h3>
+                    <div class="customLocWeather"></div>
+                    `;
+                    shadowRoot.appendChild(customWeatherList);
+                    let customList = shadowRoot.querySelector(".customLocWeather")
+                    weatherArray7day.forEach(daily => {
+                        let newDailydata = `<div class="weatherEntry">
+                        <p>Date: ${daily.name}</p>
+                        <p>Summary: ${daily.shortForecast}</p>
+                        <p>Max Temperature: ${daily.temperature} ${daily.temperatureUnit}</p>
+                        </div>`
+                        customList.insertAdjacentHTML("beforeend", newDailydata);
+                    })
+                }
+            })
+            
         });
         
     }    
 }
-
 customElements.define("weather-widget", weatherWidget);
 
 function getWeather(latitude, longitude) {    
 
-    let secondRequest = "";
-    // Use fetch API to send the form data
-    fetch(`https://api.weather.gov/points/${latitude},${longitude}`, {
+    // Use fetch API to send the get request
+    return fetch(`https://api.weather.gov/points/${latitude},${longitude}`, {
         method: 'GET'
         
     })
@@ -72,28 +119,21 @@ function getWeather(latitude, longitude) {
             // Display the response                        
             document.getElementById('weatherOutput').textContent = JSON.stringify(data, null, 2);
             // console.log(data.properties);
-            secondRequest = data.properties.forecast;
+            let secondRequest = data.properties.forecast;
+
+            let weatherMessage = `This is the weather data at location (${latitude}, ${longitude})`;    
+            document.getElementById('weatherMsg').textContent = weatherMessage;
             
-            // console.log("Second request on the next line");
-            // console.log(secondRequest);
-            // console.log("https://api.weather.gov/gridpoints/SGX/57,14/forecast");
-            // console.log("Are these equivalent: secondRequest & https://api.weather.gov/gridpoints/SGX/57,14/forecast");
-            // console.log(secondRequest === "https://api.weather.gov/gridpoints/SGX/57,14/forecast");
-            
-            get7dayWeather(secondRequest);
+            return get7dayWeather(secondRequest);            
         })
         .catch(error => {
             console.error('Error on initial fetch:', error);
-        });    
+        });        
     
-
-    let weatherMessage = `This is the weather data at location (${latitude}, ${longitude})`;
-    
-    document.getElementById('weatherMsg').textContent = weatherMessage;
 }
 
 function get7dayWeather(request) {
-    fetch(request, {
+    return fetch(request, {
         method: 'GET'
         
     })
@@ -103,19 +143,13 @@ function get7dayWeather(request) {
             
             // console.log(data);
             let weatherArray7day = data.properties.periods;
-            weatherArray7day.forEach(dayWeather => {
-                console.log(dayWeather);
-            });
+            for (let i = 0; i < weatherArray7day.length; i++) {
+                // console.log(weatherArray7day[i]);
+            }
+            // console.log(weatherArray7day);
+            return weatherArray7day;
         })
         .catch(error => {
             console.error('Error on second fetch:', error);
         });
-}
-
-function getLocationSuccess() {
-
-}
-
-function getLocationFailed() {
-    
 }

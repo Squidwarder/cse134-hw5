@@ -295,8 +295,48 @@ function forecastToIcon(forecast, time) {
         }
         
         if (representWeather.includes("Few")) {
-            return "Weather_Icons/few.jpg"
+            if (isDay) {
+                return "Weather_Icons/few.jpg"
+            } else {
+                return "Weather_Icons/nfew.jpg"
+            }
         }
+
+        if (representWeather.includes("Partly")) {
+            if (isDay) {
+                return "Weather_Icons/sct.jpg"
+            } else {
+                return "Weather_Icons/nsct.jpg"
+            }
+        }
+    }
+
+    if (representWeather.includes("Overcast")) {
+        if (isDay) {
+            return "Weather_Icons/ovc.jpg"
+        } else {
+            return "Weather_Icons/novc.jpg"
+        }
+    }
+
+    if (representWeather.includes("Smoke")) {
+        return "Weather_Icons/smoke.jpg"
+    }
+
+    if (representWeather.includes("Fog")) {
+        if (isDay) {
+            return "Weather_Icons/fg.jpg"
+        } else {
+            return "Weather_Icons/nfg.jpg"
+        }
+    }
+
+    if (representWeather.includes("Freez")) {        
+        return "Weather_Icons/fzra.jpg"        
+    }
+
+    if (representWeather.includes("Ice") || representWeather.includes("Hail")) {        
+        return "Weather_Icons/ip.jpg"        
     }
     
 }

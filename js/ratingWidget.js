@@ -15,25 +15,40 @@ class ratingWidget extends HTMLElement {
                     color: brown;
                     transition: all 0.2s;
 				}
-                input.ratingStar:checked ~ label.ratingStar:before {
+                input.ratingStar:checked ~ label.ratingStar::before {
                     content: '★';
                     transition: all 0.2s;
                 }
 
-                label.ratingStar:hover ~ label.ratingStar:before {
+                label.ratingStar:hover ~ label.ratingStar::before {
                     content: '★';
+                    transition: all 0.2s;
                 }
 
-                label.ratingStar:before {
+                label.ratingStar:hover::before {
+                    content: '★';
+                    transition: all 0.2s;                    
+                }
+
+                label.ratingStar::before {
                     content: '☆';
                 }
 
-                input#star-1:checked ~ label.ratingStar:before {
+                input#star-1:checked ~ label.ratingStar::before {
+                    color: red; 
+                    text-shadow: black 1px 0 10px;
+                }
+                input#star-1:hover ~ label.ratingStar::before {
                     color: red; 
                     text-shadow: black 1px 0 10px;
                 }
 
-                input#star-5:checked ~ label.ratingStar:before {
+                input#star-5:checked ~ label.ratingStar::before {
+                    color: #33cc33;
+                    text-shadow: #00ff55 1px 0 10px;
+                }
+
+                input#star-5:hover ~ label.ratingStar::before {
                     color: #33cc33;
                     text-shadow: #00ff55 1px 0 10px;
                 }

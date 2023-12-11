@@ -55,6 +55,7 @@ class weatherWidget extends HTMLElement {
         let shadowRoot = this.shadowRoot;
         let sanDiegoLatitude = this.sanDiegoLatitude;
         let sanDiegoLongitude = this.sanDiegoLongitude;
+        let refreshDefault = this.weatherContainer.querySelector('#refreshDefault');
 
         //* Fill out default San Diego weather data
         let sanDiego7day = getWeather(sanDiegoLatitude, sanDiegoLongitude);
@@ -71,6 +72,10 @@ class weatherWidget extends HTMLElement {
             });
         })
 
+        refreshDefault.addEventListener("click", function(event) {
+            console.log("Refresh called");
+        })
+
         let inputLatitude = this.weatherContainer.querySelector('#locLatitude');
         let inputLongitude = this.weatherContainer.querySelector('#locLongitude');      
         this.getWeatherBtn.addEventListener('click', function(event) {        
@@ -78,17 +83,18 @@ class weatherWidget extends HTMLElement {
             
             let weather7Day = getWeather(inputLatitude.value, inputLongitude.value);
             weather7Day.then(weatherArray7day => {
-                console.log(weatherArray7day);
+                // console.log(weatherArray7day);
                 let el = shadowRoot.querySelector('.customLocWeather');
 			    if (el) {
-                    console.log("The custom Location Weather list is already added");            
+                    let customList = shadowRoot.querySelector(".customLocWeather")
+                    console.log("The custom Location Weather list is already added");
                 } else {
-                    let customWeatherList = document.createElement("section");                    
-                    customWeatherList.innerHTML = `
+                    let customWeatherSection = document.createElement("section");                    
+                    customWeatherSection.innerHTML = `
                     <h3>The detailed 7 day weather data</h3>
                     <div class="customLocWeather"></div>
                     `;
-                    shadowRoot.appendChild(customWeatherList);
+                    shadowRoot.appendChild(customWeatherSection);
                     let customList = shadowRoot.querySelector(".customLocWeather")
                     weatherArray7day.forEach(daily => {
                         let newDailydata = `<div class="weatherEntry">

@@ -93,13 +93,14 @@ class weatherWidget extends HTMLElement {
                 let formattedDate = `${year}/${month < 10 ? '0' : ''}${month}/${day < 10 ? '0' : ''}${day}
                                             ${hour < 12 ? hour : hour - 12}${hour < 12 ? "AM" : "PM"}`;
 
-                forecastToIcon(daily.shortForecast, hour);
+                let imgPath = forecastToIcon(daily.shortForecast, hour);
+                // console.log(imgPath);
                 let newDailydata = `<div class="weatherEntry">
                 <p>${daily.name}</p>
                 <p>${formattedDate}</p>
                 <p>${daily.shortForecast}</p>
                 <picture>
-                <img src="${daily.icon}" alt="Weather Icon">
+                <img src="${imgPath}" alt="Weather Icon">
                 </picture>
                 <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
                 <p>Humidity: ${daily.relativeHumidity.value} %</p>
@@ -281,62 +282,110 @@ function forecastToIcon(forecast, time) {
     if (time > 17) {
         isDay = false;
     }
-    console.log(forecastArray[0]);
+    // console.log(forecastArray[0]);
 
     let representWeather = forecastArray[0];
+
+    if (representWeather.includes("Sunny")) {
+        if (representWeather.includes("Mostly")) {
+            return "Weather_Icons/mostly_sunny.png";
+        }
+
+        return "Weather_Icons/sunny.png";
+    }
+
+    if (representWeather.includes("Clear")) {
+        if (representWeather.includes("Mostly")) {
+            if (isDay) {
+                return "Weather_Icons/few.jpg";
+            } else {
+                return "Weather_Icons/nfew.jpg";
+            }
+        }
+
+        if (isDay) {
+            return "Weather_Icons/skc.jpg";
+        } else {
+            return "Weather_Icons/nskc.jpg";
+        }
+    }
 
     if (representWeather.includes("Cloudy")) {
         if (representWeather.includes("Mostly")) {
             if (isDay) {
-                return "Weather_Icons/bkn.jpg"
+                return "Weather_Icons/bkn.jpg";
             } else {
-                return "Weather_Icons/nbkn.jpg"
+                return "Weather_Icons/nbkn.jpg";
             }
         }
         
         if (representWeather.includes("Few")) {
             if (isDay) {
-                return "Weather_Icons/few.jpg"
+                return "Weather_Icons/few.jpg";
             } else {
-                return "Weather_Icons/nfew.jpg"
+                return "Weather_Icons/nfew.jpg";
             }
         }
 
         if (representWeather.includes("Partly")) {
             if (isDay) {
-                return "Weather_Icons/sct.jpg"
+                return "Weather_Icons/sct.jpg";
             } else {
-                return "Weather_Icons/nsct.jpg"
+                return "Weather_Icons/nsct.jpg";
             }
         }
     }
 
     if (representWeather.includes("Overcast")) {
         if (isDay) {
-            return "Weather_Icons/ovc.jpg"
+            return "Weather_Icons/ovc.jpg";
         } else {
-            return "Weather_Icons/novc.jpg"
+            return "Weather_Icons/novc.jpg";
         }
     }
 
     if (representWeather.includes("Smoke")) {
-        return "Weather_Icons/smoke.jpg"
+        return "Weather_Icons/smoke.jpg";
     }
 
     if (representWeather.includes("Fog")) {
         if (isDay) {
-            return "Weather_Icons/fg.jpg"
+            return "Weather_Icons/fg.jpg";
         } else {
-            return "Weather_Icons/nfg.jpg"
+            return "Weather_Icons/nfg.jpg";
         }
     }
 
     if (representWeather.includes("Freez")) {        
-        return "Weather_Icons/fzra.jpg"        
+        return "Weather_Icons/fzra.jpg";
     }
 
     if (representWeather.includes("Ice") || representWeather.includes("Hail")) {        
-        return "Weather_Icons/ip.jpg"        
+        return "Weather_Icons/ip.jpg";
+    }
+
+    if (representWeather.includes("Freez") && representWeather.includes("Snow")) {
+        if (isDay) {
+            return "Weather_Icons/mix.jpg";
+        } else {
+            return "Weather_Icons/nmix.jpg";
+        }
+    }
+
+    if (representWeather.includes("Rain") && representWeather.includes("Ice")) {
+        return "Weather_Icons/raip.jpg";
+    }
+
+    if (representWeather.includes("Rain") && representWeather.includes("Snow")) {
+        if (isDay) {
+            return "Weather_Icons/rasn.jpg";
+        } else {
+            return "Weather_Icons/nrasn.jpg";
+        }
+    }
+
+    if (representWeather.includes("Showers")) {
+        return "Weather_Icons/raip.jpg";
     }
     
 }

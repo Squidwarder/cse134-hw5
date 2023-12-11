@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Weather Demo</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Yalu Ouyang's Personal portfolio">
+        <meta name="keywords" content="Personal, Portfolio, employment, job-hunting">
+        <meta name="author" content="Yalu Ouyang">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+        <link rel="manifest" href="favicon_io/site.webmanifest">
+        <link rel="stylesheet" href="css/general.css">
+    </head>
+    <body>
+        <input type="checkbox" id="theme-switch" style="display: none;">
+        <nav>
+            <a href="index.html">Back to homepage</a>
+            <a href="about_me.html">About me</a>
+            <a href="blog.html">My blog posts</a>
+            <label for="theme-switch" class="switch-label"></label>
+        </nav>
+        <header>
+            <h1>Hello, this page contains a demo of a weather app</h1>
+        </header>
+
+        <main>
+            <section>
+                <h2>Current weather (HW5)</h2>
+                
+                <weather-widget id="nationalWeatherService">
+                    <p>Current Weather Conditions Unavailable</p>
+                </weather-widget>
+                <p id="ratingMsg"></p>
+                <output id="ratingOutput" style="white-space : pre;">&nbsp;</output>
+            </section>
+        </main>
+
+        <script src="js/weatherWidget.js"></script>        
+        <script src="js/setTheme.js"></script>
+    </body>
+</html>

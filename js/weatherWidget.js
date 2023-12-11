@@ -110,6 +110,7 @@ class weatherWidget extends HTMLElement {
 
         refreshDefault.addEventListener("click", function(event) {
             console.log("Refresh called");
+            this.textContent = "Refreshing...";
 
             let sanDiego7day = getWeather(sanDiegoLatitude, sanDiegoLongitude);
             sanDiego7day.then(weatherArray7day => {
@@ -139,6 +140,8 @@ class weatherWidget extends HTMLElement {
                     defaultList.insertAdjacentHTML("beforeend", newDailydata);
                 });
                 console.log("Refresh worked");
+                
+                this.textContent = "Refresh";
             })
 
             
@@ -146,12 +149,12 @@ class weatherWidget extends HTMLElement {
 
         let inputLatitude = this.weatherContainer.querySelector('#locLatitude');
         let inputLongitude = this.weatherContainer.querySelector('#locLongitude');      
-        this.getWeatherBtn.addEventListener('click', function(event) {        
-            // console.log(inputLatitude.value);
-            
+        this.getWeatherBtn.addEventListener('click', function(event) {         
+
             let weather7Day = getWeather(inputLatitude.value, inputLongitude.value);
             weather7Day.then(weatherArray7day => {
-                // console.log(weatherArray7day);
+                // console.log(weatherArray7day);                
+
                 let el = shadowRoot.querySelector('.customLocWeather');
 			    if (el) {
                     let customList = shadowRoot.querySelector(".customLocWeather")
@@ -180,8 +183,6 @@ class weatherWidget extends HTMLElement {
                         </div>`
                         customList.insertAdjacentHTML("beforeend", newDailydata);
                     })
-
-                    console.log("The update worked");
 
                 } else {
                     let customWeatherSection = document.createElement("section");                    

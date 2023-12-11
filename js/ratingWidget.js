@@ -5,11 +5,7 @@ class ratingWidget extends HTMLElement {
         this.attachShadow({ mode: 'open' });
 
         this.shadowRoot.innerHTML = `
-			<style>
-                div {
-                    display: flexbox;                                       
-                    left: 0;
-                }
+			<style>                
                 input.ratingStar {
                     display: none;
                 }
@@ -117,33 +113,26 @@ class ratingWidget extends HTMLElement {
         });
 
         this.rating1star.addEventListener('click', function(event) {
-            console.log("set rating to 1 stars");
+            // console.log("set rating to 1 stars");
             numRating.value = 1;
         });
         this.rating2star.addEventListener('click', function(event) {
-            console.log("set rating to 2 stars");
+            // console.log("set rating to 2 stars");
             numRating.value = 2;
         });
         this.rating3star.addEventListener('click', function(event) {
-            console.log("set rating to 3 stars");
+            // console.log("set rating to 3 stars");
             numRating.value = 3;
         });
         this.rating4star.addEventListener('click', function(event) {
-            console.log("set rating to 4 stars");
+            // console.log("set rating to 4 stars");
             numRating.value = 4;
         });
         this.rating5star.addEventListener('click', function(event) {
-            console.log("set rating to 5 stars");
+            // console.log("set rating to 5 stars");
             numRating.value = 5;
         });
     }
-
-    // setRating(rateNum) {
-    //     console.log("setRating() is called");
-    //     let ratingField = this.ratingContainer.querySelector("#rating");
-    //     ratingField.value = rateNum;
-    // }
-
 }
 
 customElements.define("rating-widget", ratingWidget);

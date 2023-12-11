@@ -20,8 +20,12 @@ class ratingWidget extends HTMLElement {
                     transition: all 0.2s;
                 }
 
+                label.ratingStar:hover ~ label.ratingStar:before {
+                    content: '★';
+                }
+
                 label.ratingStar:before {
-                    content: '☆';        
+                    content: '☆';
                 }
 
                 input#star-1:checked ~ label.ratingStar:before {
@@ -77,6 +81,7 @@ class ratingWidget extends HTMLElement {
         this.ratingContainer.action = "https://httpbin.org/post";
         this.ratingContainer.method = "POST";
 
+        let ratingContainer = this.ratingContainer;
         let numRating = this.ratingContainer.querySelector('#rating');
         let shadowRoot = this.shadowRoot;        
         
@@ -115,24 +120,58 @@ class ratingWidget extends HTMLElement {
         this.rating1star.addEventListener('click', function(event) {
             // console.log("set rating to 1 stars");
             numRating.value = 1;
+            submitRating(ratingContainer, numRating);
         });
         this.rating2star.addEventListener('click', function(event) {
             // console.log("set rating to 2 stars");
             numRating.value = 2;
+            submitRating(ratingContainer, numRating);
         });
         this.rating3star.addEventListener('click', function(event) {
             // console.log("set rating to 3 stars");
             numRating.value = 3;
+            submitRating(ratingContainer, numRating);
         });
         this.rating4star.addEventListener('click', function(event) {
             // console.log("set rating to 4 stars");
             numRating.value = 4;
+            submitRating(ratingContainer, numRating);
         });
         this.rating5star.addEventListener('click', function(event) {
             // console.log("set rating to 5 stars");
             numRating.value = 5;
+            submitRating(ratingContainer, numRating);
         });
-    }
+    }    
 }
 
 customElements.define("rating-widget", ratingWidget);
+
+function submitRating(ratingContainer, numRating) {
+    let formData = new FormData(ratingContainer);         
+
+    // Use fetch API to send the form data
+    fetch('https://httpbin.org/post', {
+        method: 'POST',
+        headers: {
+            "X-Sent-By": "JS",
+        },
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Display the response
+            document.getElementById('ratingOutput').textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    let ratingMessage = "";
+
+    if (numRating.value >= 4){
+        ratingMessage = `Thanks for a ${numRating.value} rating! Much appreciated`;
+    } else {
+        ratingMessage = `Thank you for your ${numRating.value} star feedback. I'll try to do better`;
+    }
+    document.getElementById('ratingMsg').textContent = ratingMessage;
+}

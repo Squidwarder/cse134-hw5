@@ -128,12 +128,13 @@ class weatherWidget extends HTMLElement {
                     let formattedDate = `${year}/${month < 10 ? '0' : ''}${month}/${day < 10 ? '0' : ''}${day}
                                                 ${hour < 12 ? hour : hour - 12}${hour < 12 ? "AM" : "PM"}`;
 
+                    let imgPath = forecastToIcon(daily.shortForecast, hour);
                     let newDailydata = `<div class="weatherEntry">
                     <p>${daily.name}</p>
                     <p>${formattedDate}</p>
                     <p>${daily.shortForecast}</p>
                     <picture>
-                    <img src="${daily.icon}" alt="Weather Icon">
+                    <img src="${imgPath}" alt="Weather Icon">
                     </picture>
                     <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
                     <p>Humidity: ${daily.relativeHumidity.value} %</p>
@@ -172,12 +173,13 @@ class weatherWidget extends HTMLElement {
                         let formattedDate = `${year}/${month < 10 ? '0' : ''}${month}/${day < 10 ? '0' : ''}${day}
                                                     ${hour < 12 ? hour : hour - 12}${hour < 12 ? "AM" : "PM"}`;
 
+                        let imgPath = forecastToIcon(daily.shortForecast, hour);
                         let newDailydata = `<div class="weatherEntry">
                         <p>${daily.name}</p>
                         <p>${formattedDate}</p>
                         <p>${daily.shortForecast}</p>
                         <picture>
-                        <img src="${daily.icon}" alt="Weather Icon">
+                        <img src="${imgPath}" alt="Weather Icon">
                         </picture>
                         <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
                         <p>Humidity: ${daily.relativeHumidity.value} %</p>
@@ -203,13 +205,14 @@ class weatherWidget extends HTMLElement {
                         let formattedDate = `${year}/${month < 10 ? '0' : ''}${month}/${day < 10 ? '0' : ''}${day}
                                                     ${hour < 12 ? hour : hour - 12}${hour < 12 ? "AM" : "PM"}`;
 
+                        let imgPath = forecastToIcon(daily.shortForecast, hour);
                         let newDailydata = `<div class="weatherEntry">
                         <p>${daily.name}</p>
                         <p>${formattedDate}</p>
                         <p>${daily.shortForecast}</p>
                         <picture>
-                        <img src="${daily.icon}" alt="Weather Icon">
-                        </picture>                        
+                        <img src="${imgPath}" alt="Weather Icon">
+                        </picture>
                         <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
                         <p>Humidity: ${daily.relativeHumidity.value} %</p>
                         <p>Wind: ${daily.windSpeed} from ${daily.windDirection}</p>
@@ -279,7 +282,7 @@ function get7dayWeather(request) {
 function forecastToIcon(forecast, time) {
     const forecastArray = forecast.split("then");
     let isDay = true;
-    if (time > 17) {
+    if (time > 12) {
         isDay = false;
     }
     // console.log(forecastArray[0]);
@@ -385,7 +388,78 @@ function forecastToIcon(forecast, time) {
     }
 
     if (representWeather.includes("Showers")) {
-        return "Weather_Icons/raip.jpg";
+        return "Weather_Icons/shra.jpg";
     }
+
+    if (representWeather.includes("Thunderstorm") || representWeather.includes("storm")) {
+        if (isDay) {
+            return "Weather_Icons/tsra.jpg";
+        } else {
+            return "Weather_Icons/ntsra.jpg";
+        }
+    }
+
+    if (representWeather.includes("Snow")) {
+        if (isDay) {
+            return "Weather_Icons/sn.jpg";
+        } else {
+            return "Weather_Icons/nsn.jpg";
+        }
+    }
+
+    if (representWeather.includes("Windy")) {
+        if (isDay) {
+            return "Weather_Icons/wind.jpg";
+        } else {
+            return "Weather_Icons/nwind.jpg";
+        }
+    }
+
+    if (representWeather.includes("Shower") && representWeather.includes("Vicinity")) {
+        if (isDay) {
+            return "Weather_Icons/hi_shwrs.jpg";
+        } else {
+            return "Weather_Icons/hi_nshwrs.jpg";
+        }
+    }
+
+    if (representWeather.includes("Thunderstorm") && representWeather.includes("Vicinity")) {
+        if (isDay) {
+            return "Weather_Icons/hi_tsra.jpg";
+        } else {
+            return "Weather_Icons/hi_ntsra.jpg";
+        }
+    }
+
+    if (representWeather.includes("Light Rain") || representWeather.includes("Drizzle")) {
+        if (isDay) {
+            return "Weather_Icons/ra1.jpg";
+        } else {
+            return "Weather_Icons/nra.jpg";
+        }
+    }
+
+    if (representWeather.includes("Rain")) {
+        if (isDay) {
+            return "Weather_Icons/ra.jpg";
+        } else {
+            return "Weather_Icons/nra.jpg";
+        }
+    }
+
+    if (representWeather.includes("Funnel") || representWeather.includes("Tornado")) {
+        return "Weather_Icons/nsvrtsra.jpg"
+    }
+
+    if (representWeather.includes("Dust")) {
+        return "Weather_Icons/dust.jpg"
+    }
+
+    if (representWeather.includes("Haze")) {
+        return "Weather_Icons/mist.jpg"
+    }
+
+    //? Some default value in case everything else fails
+    return "Weather_Icons/sunny.png"
     
 }

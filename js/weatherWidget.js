@@ -10,13 +10,16 @@ class weatherWidget extends HTMLElement {
 				button.weatherButton {                                 
                     font-size: 15px;
 					cursor: pointer;
-                    color: #ff3385;                    
+                    color: #ff3385;
+                    text-shadow: #ff80ff 1px 0 10px;
+                    border: 2px solid #ff3385;
+                    background-color: white;           
 				}
                 
 
                 button.weatherButton:hover {
-                    background-color: lime;          
-                    text-shadow: black 1px 0 10px;
+                    color: white;
+                    background-color: #ff3385;                    
                 }                          
 
 			</style>
@@ -26,7 +29,8 @@ class weatherWidget extends HTMLElement {
         this.sanDigeoLongitude = -117.161087;        
 
         this.weatherContainer = document.createElement("div");
-        this.weatherContainer.innerHTML = `        
+        this.weatherContainer.innerHTML = `
+               
         <button class="weatherButton" id="getWeatherBtn" name="weatherButton">Get weather Data</button>        
         `;
         

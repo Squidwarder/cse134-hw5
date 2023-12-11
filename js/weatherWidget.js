@@ -93,6 +93,7 @@ class weatherWidget extends HTMLElement {
                 let formattedDate = `${year}/${month < 10 ? '0' : ''}${month}/${day < 10 ? '0' : ''}${day}
                                             ${hour < 12 ? hour : hour - 12}${hour < 12 ? "AM" : "PM"}`;
 
+                forecastToIcon(daily.shortForecast, hour);
                 let newDailydata = `<div class="weatherEntry">
                 <p>${daily.name}</p>
                 <p>${formattedDate}</p>
@@ -272,4 +273,24 @@ function get7dayWeather(request) {
         .catch(error => {
             console.error('Error on second fetch:', error);
         });
+}
+
+function forecastToIcon(forecast, time) {
+    const forecastArray = forecast.split("then");
+    let dayOrNight = "";
+    if (time > 17) {
+        dayOrNight = "Night";
+    } else {
+        dayOrNight = "Day";
+    }
+    console.log(forecastArray[0]);
+
+    let representWeather = forecastArray[0];
+
+    if (representWeather.includes("Cloudy")) {
+        if (representWeather.includes("Mostly")) {
+            return "Weather_Icons/bkn.jpg"
+        }
+    }
+    
 }

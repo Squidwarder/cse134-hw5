@@ -4,29 +4,59 @@ class ratingWidget extends HTMLElement {
 
         this.attachShadow({ mode: 'open' });
 
+        this.shadowRoot.innerHTML = `
+			<style>
+                input.ratingStar {
+                    display: none;
+                }
+				label.ratingStar {
+                    font-size: 30px;
+					cursor: pointer;
+                    color: brown;
+                    transition: all 0.2s;
+				}
+                input.ratingStar:checked ~ label.ratingStar:before {
+                    content: '★';
+                    transition: all 0.2s;
+                }
+
+                label.ratingStar:before {
+                    content: '☆';                   
+                  }
+			</style>
+		`;
+        
+
+        // ★
         this.ratingContainer = document.createElement("form");
         this.ratingContainer.innerHTML = `
         <label for="rating">How satisfied are you?</label>
         <input type="hidden" name="question" value="How satisfied are you?">
         <input type="hidden" name="sentBy" value="JS">        
-        <input type="hidden" id="rating" name="rating" required>
+        <input type="number" id="rating" name="rating" min=1 max=5
+            value=0 required style="display: none;">
         <button type="submit">Submit rating</button>
-        `
-        
+        `;
+
         this.ratingStarContainer = document.createElement("div");
         this.ratingStarContainer.innerHTML = `
-        <label for="star-1">★</label>
-        <input id="star-1" type="radio" style="display: none;">
-        <label for="star-2">★</label>
-        <input id="star-2" type="radio" style="display: none;">
-        <label for="star-3">★</label>
-        <input id="star-3" type="radio" style="display: none;">
-        <label for="star-4">★</label>
-        <input id="star-4" type="radio" style="display: none;">
-        <label for="star-5">★</label>
-        <input id="star-5" type="radio" style="display: none;">
-        `
+        <input class="ratingStar star-1" id="star-1" type="radio">
+        <label class="ratingStar" for="star-1"></label>
+        <input class="ratingStar star-2" id="star-2" type="radio">
+        <label class="ratingStar" for="star-2"></label>
+        <input class="ratingStar star-3" id="star-3" type="radio">
+        <label class="ratingStar" for="star-3"></label>
+        <input class="ratingStar star-4" id="star-4" type="radio">        
+        <label class="ratingStar" for="star-4"></label>
+        <label class="ratingStar star-5" for="star-5"></label>        
+        <input class="ratingStar" id="star-5" type="radio">
+        `;
         
+        this.rating1star = this.ratingStarContainer.querySelector('#star-1');
+        this.rating2star = this.ratingStarContainer.querySelector('#star-2');
+        this.rating3star = this.ratingStarContainer.querySelector('#star-3');
+        this.rating4star = this.ratingStarContainer.querySelector('#star-4');
+        this.rating5star = this.ratingStarContainer.querySelector('#star-5');   
         this.shadowRoot.appendChild(this.ratingStarContainer);
         this.shadowRoot.appendChild(this.ratingContainer);
     }
@@ -35,13 +65,16 @@ class ratingWidget extends HTMLElement {
         //console.log("Custom rating widget connected!");
         this.ratingContainer.action = "https://httpbin.org/post";
         this.ratingContainer.method = "POST";
+
+        let numRating = this.ratingContainer.querySelector('#rating');
+        let shadowRoot = this.shadowRoot;        
         
         this.ratingContainer.addEventListener('submit', function(event) {
             event.preventDefault();
     
             // Prepare FormData from the form
-            let formData = new FormData(this);
-    
+            let formData = new FormData(this);         
+
             // Use fetch API to send the form data
             fetch('https://httpbin.org/post', {
                 method: 'POST',
@@ -58,16 +91,44 @@ class ratingWidget extends HTMLElement {
                 .catch(error => {
                     console.error('Error:', error);
                 });
+
+            let ratingMessage = "";
+            if (numRating.value >= 4){
+                ratingMessage = `Thanks for a ${numRating.value} rating! Much appreciated`;
+            } else {
+                ratingMessage = `Thank you for your ${numRating.value} star feedback. I'll try to do better`;
+            }
+            document.getElementById('ratingMsg').textContent = ratingMessage;
+        });
+
+        this.rating1star.addEventListener('click', function(event) {
+            console.log("set rating to 1 stars");
+            numRating.value = 1;
+        });
+        this.rating2star.addEventListener('click', function(event) {
+            console.log("set rating to 2 stars");
+            numRating.value = 2;
+        });
+        this.rating3star.addEventListener('click', function(event) {
+            console.log("set rating to 3 stars");
+            numRating.value = 3;
+        });
+        this.rating4star.addEventListener('click', function(event) {
+            console.log("set rating to 4 stars");
+            numRating.value = 4;
+        });
+        this.rating5star.addEventListener('click', function(event) {
+            console.log("set rating to 5 stars");
+            numRating.value = 5;
         });
     }
 
-    setRating(rateNum) {
-        console.log("setRating() is called");
-        let ratingField = this.ratingContainer.getElementById("rating");
-        ratingField.value = rateNum;
-    }
+    // setRating(rateNum) {
+    //     console.log("setRating() is called");
+    //     let ratingField = this.ratingContainer.querySelector("#rating");
+    //     ratingField.value = rateNum;
+    // }
 
 }
 
 customElements.define("rating-widget", ratingWidget);
-

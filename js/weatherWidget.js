@@ -96,7 +96,7 @@ class weatherWidget extends HTMLElement {
                 let imgPath = forecastToIcon(daily.shortForecast, hour);
                 // console.log(imgPath);
                 let newDailydata = `<div class="weatherEntry">
-                <p>${daily.name}</p>
+                <h3>${daily.name}</h3>
                 <p>${formattedDate}</p>
                 <p>${daily.shortForecast}</p>
                 <picture>
@@ -130,7 +130,7 @@ class weatherWidget extends HTMLElement {
 
                     let imgPath = forecastToIcon(daily.shortForecast, hour);
                     let newDailydata = `<div class="weatherEntry">
-                    <p>${daily.name}</p>
+                    <h3>${daily.name}</h3>
                     <p>${formattedDate}</p>
                     <p>${daily.shortForecast}</p>
                     <picture>
@@ -175,7 +175,7 @@ class weatherWidget extends HTMLElement {
 
                         let imgPath = forecastToIcon(daily.shortForecast, hour);
                         let newDailydata = `<div class="weatherEntry">
-                        <p>${daily.name}</p>
+                        <h3>${daily.name}</h3>
                         <p>${formattedDate}</p>
                         <p>${daily.shortForecast}</p>
                         <picture>
@@ -207,7 +207,7 @@ class weatherWidget extends HTMLElement {
 
                         let imgPath = forecastToIcon(daily.shortForecast, hour);
                         let newDailydata = `<div class="weatherEntry">
-                        <p>${daily.name}</p>
+                        <h3>${daily.name}</h3>
                         <p>${formattedDate}</p>
                         <p>${daily.shortForecast}</p>
                         <picture>

@@ -90,6 +90,7 @@ class weatherWidget extends HTMLElement {
                 const month = startDate.getMonth() + 1;
                 const day = startDate.getDate();
                 const hour = startDate.getHours();
+                const tempMaxOrMin = (hour < 12) ? "Max" : "Lowest";
                 let formattedDate = `${year}/${month < 10 ? '0' : ''}${month}/${day < 10 ? '0' : ''}${day}
                                             ${hour < 12 ? hour : hour - 12}${hour < 12 ? "AM" : "PM"}`;
 
@@ -102,7 +103,7 @@ class weatherWidget extends HTMLElement {
                 <picture>
                 <img src="${imgPath}" alt="Weather Icon">
                 </picture>
-                <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
+                <p>${tempMaxOrMin} Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
                 <p>Humidity: ${daily.relativeHumidity.value} %</p>
                 <p>Wind: ${daily.windSpeed} from ${daily.windDirection}</p>
                 </div>`
@@ -125,6 +126,7 @@ class weatherWidget extends HTMLElement {
                     const month = startDate.getMonth() + 1;
                     const day = startDate.getDate();
                     const hour = startDate.getHours();
+                    const tempMaxOrMin = (hour < 12) ? "Max" : "Lowest";
                     let formattedDate = `${year}/${month < 10 ? '0' : ''}${month}/${day < 10 ? '0' : ''}${day}
                                                 ${hour < 12 ? hour : hour - 12}${hour < 12 ? "AM" : "PM"}`;
 
@@ -136,7 +138,7 @@ class weatherWidget extends HTMLElement {
                     <picture>
                     <img src="${imgPath}" alt="Weather Icon">
                     </picture>
-                    <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
+                    <p>${tempMaxOrMin} Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
                     <p>Humidity: ${daily.relativeHumidity.value} %</p>
                     <p>Wind: ${daily.windSpeed} from ${daily.windDirection}</p>
                     </div>`
@@ -169,7 +171,8 @@ class weatherWidget extends HTMLElement {
                         const year = startDate.getFullYear();
                         const month = startDate.getMonth() + 1;
                         const day = startDate.getDate();
-                        const hour = startDate.getHours();
+                        const hour = startDate.getHours();                        
+                        const tempMaxOrMin = (hour < 12) ? "Max" : "Lowest";
                         let formattedDate = `${year}/${month < 10 ? '0' : ''}${month}/${day < 10 ? '0' : ''}${day}
                                                     ${hour < 12 ? hour : hour - 12}${hour < 12 ? "AM" : "PM"}`;
 
@@ -181,7 +184,7 @@ class weatherWidget extends HTMLElement {
                         <picture>
                         <img src="${imgPath}" alt="Weather Icon">
                         </picture>
-                        <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
+                        <p>${tempMaxOrMin} Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
                         <p>Humidity: ${daily.relativeHumidity.value} %</p>
                         <p>Wind: ${daily.windSpeed} from ${daily.windDirection}</p>
                         </div>`
@@ -202,6 +205,7 @@ class weatherWidget extends HTMLElement {
                         const month = startDate.getMonth() + 1;
                         const day = startDate.getDate();
                         const hour = startDate.getHours();
+                        const tempMaxOrMin = (hour < 12) ? "Max" : "Lowest";
                         let formattedDate = `${year}/${month < 10 ? '0' : ''}${month}/${day < 10 ? '0' : ''}${day}
                                                     ${hour < 12 ? hour : hour - 12}${hour < 12 ? "AM" : "PM"}`;
 
@@ -213,7 +217,7 @@ class weatherWidget extends HTMLElement {
                         <picture>
                         <img src="${imgPath}" alt="Weather Icon">
                         </picture>
-                        <p>Max Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
+                        <p>${tempMaxOrMin} Temp: ${daily.temperature} °${daily.temperatureUnit}</p>
                         <p>Humidity: ${daily.relativeHumidity.value} %</p>
                         <p>Wind: ${daily.windSpeed} from ${daily.windDirection}</p>
                         </div>`

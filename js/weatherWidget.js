@@ -280,14 +280,13 @@ function get7dayWeather(request) {
 }
 
 function forecastToIcon(forecast, time) {
-    const forecastArray = forecast.split("then");
     let isDay = true;
     if (time > 12) {
         isDay = false;
     }
     // console.log(forecastArray[0]);
 
-    let representWeather = forecastArray[0];
+    let representWeather = forecast;
 
     if (representWeather.includes("Sunny")) {
         if (representWeather.includes("Mostly")) {
